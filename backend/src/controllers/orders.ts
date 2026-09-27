@@ -49,7 +49,7 @@ const createOrder = (req: Request, res: Response, next: NextFunction) => {
         return next(new BadRequestError('Неверная сумма заказа'));
       }
 
-      return res.status(201).send({ id: faker.string.uuid(), total });
+      return res.send({ id: faker.string.uuid(), total });
     })
     .catch(next);
 };
