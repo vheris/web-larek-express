@@ -5,7 +5,7 @@ export const validateProducts = celebrate({
     title: Joi.string().required().min(2).max(30),
     image: Joi.object()
       .keys({
-        filename: Joi.string().required(),
+        fileName: Joi.string().required(),
         originalName: Joi.string().required(),
       })
       .required(),
