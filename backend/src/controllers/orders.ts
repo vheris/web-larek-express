@@ -1,13 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import mongoose from 'mongoose';
-import validator from 'validator';
 import { faker } from '@faker-js/faker';
 import Product from '../models/product';
 import BadRequestError from '../errors/bad-request-error';
 
 const createOrder = (req: Request, res: Response, next: NextFunction) => {
   const {
-    payment, email, phone, address, total, items,
+    total, items,
   } = req.body;
 
   return Product.find({ _id: { $in: items } })
