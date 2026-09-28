@@ -10,29 +10,6 @@ const createOrder = (req: Request, res: Response, next: NextFunction) => {
     payment, email, phone, address, total, items,
   } = req.body;
 
-  if (!['card', 'online'].includes(payment)) {
-    return next(new BadRequestError('Некорректный способ оплаты'));
-  }
-  if (typeof email !== 'string' || !validator.isEmail(email)) {
-    return next(new BadRequestError('Некорректный email'));
-  }
-  if (typeof phone !== 'string' || !phone) {
-    return next(new BadRequestError('Не указан телефон'));
-  }
-  if (typeof address !== 'string' || !address) {
-    return next(new BadRequestError('Не указан адрес'));
-  }
-  if (typeof total !== 'number') {
-    return next(new BadRequestError('Не указана сумма заказа'));
-  }
-  if (
-    !Array.isArray(items)
-    || items.length === 0
-    || !items.every((id) => mongoose.isValidObjectId(id))
-  ) {
-    return next(new BadRequestError('Некорректный список товаров'));
-  }
-
   return Product.find({ _id: { $in: items } })
     .then((products) => {
       if (products.length !== new Set(items).size) {
